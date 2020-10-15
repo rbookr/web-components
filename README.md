@@ -1,24 +1,18 @@
 # web-components
 
-## Project setup
-```
-yarn install
-```
+## 说明
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+- 安装包`yarn install`
+- 修改`yarn serve`
+- 编译`yarn build`
 
-### Compiles and minifies for production
-```
-yarn build
-```
+## web组件
 
-### Lints and fixes files
-```
-yarn lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- `wc-pcs-list-by-tags`
+  - base pcs的网站地址
+  - tags 根据tag筛选的列表`"tag1,tag2.."`
+  - prefix 列表的显示的前缀
+  - newTab 是否新的标签打开，默认`"true"`
+
+
