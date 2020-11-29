@@ -10,6 +10,8 @@ div.pcsListByTags
         th 地址
         th 题目
         th 标签
+        th 视频
+        th 说明
     tbody
       tr(v-for="item,idx in list")
         td {{idx+1}}
@@ -22,6 +24,9 @@ div.pcsListByTags
         td 
             span(v-for="tag in item.head.tags || []" v-bind:style="{background:strToRGB(tag)}")
                 | {{tag}}
+        td 
+            a(v-bind:href="item.head.video" v-if="item.head.video") 📺
+        td {{item.head.comment || ""}}
 </template>
 
 <script>
@@ -31,8 +36,10 @@ export default {
   props:{
     "base":{type:String},
     "tags":{type:String},
+    "match":{type:String,default:"tags"},
     "prefix":{type:String},
-    "newTab":{type:String,default:'true'}
+    "newTab":{type:String,default:'true'},
+    "excludeId":{type:String,default:'[]'}
   },
   data(){
     return {
@@ -42,16 +49,35 @@ export default {
     }
   },
   mounted(){
-    this.get_list()
+      console.log("==================================================sdfasdfasdf=")
+      this.get_list()
   },
   methods:{
-    get_list(){
+    get_list(match_urls){
+      console.log("===================================================")
       this.loading=true
-      let queryUrl = `${this.base}utils/list_match_by_tags?tags=${this.tags}`
+      //list_match_by_tags?tags
+      let queryUrl = `${this.base}utils/list_match_by_${this.match}?${this.match}=${this.tags}`
+      console.log(queryUrl)
+      //filter
+      let excludeId = this.excludeId.split(",")
       return fetch(queryUrl)
         .then(res=>res.json())
         .then(data=>{
-            this.list = data.articles
+                console.log(data)
+                console.log(excludeId)
+                this.list= data.articles.filter( ({_id,extra_id=[]})=>{
+                        if( excludeId.includes(_id)) return false
+                        for( let eid of extra_id){
+                        if( excludeId.includes(eid) ) return false;
+                        }
+                        return true;
+                })
+            console.log(this.list)
+            console.log(this.list)
+            console.log(this.list)
+            console.log(this.list)
+            console.log(this.list)
             this.loading=false
             this.refresh=false
             })
