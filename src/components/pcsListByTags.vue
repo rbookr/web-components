@@ -49,23 +49,20 @@ export default {
     }
   },
   mounted(){
-      console.log("==================================================sdfasdfasdf=")
       this.get_list()
   },
   methods:{
     get_list(match_urls){
-      console.log("===================================================")
       this.loading=true
       //list_match_by_tags?tags
       let queryUrl = `${this.base}utils/list_match_by_${this.match}?${this.match}=${this.tags}`
-      console.log(queryUrl)
       //filter
       let excludeId = this.excludeId.split(",")
       return fetch(queryUrl)
         .then(res=>res.json())
         .then(data=>{
-                console.log(data)
-                console.log(excludeId)
+                /*console.log(data)*/
+                /*console.log(excludeId)*/
                 this.list= data.articles.filter( ({_id,extra_id=[]})=>{
                         if( excludeId.includes(_id)) return false
                         for( let eid of extra_id){
@@ -73,11 +70,6 @@ export default {
                         }
                         return true;
                 })
-            console.log(this.list)
-            console.log(this.list)
-            console.log(this.list)
-            console.log(this.list)
-            console.log(this.list)
             this.loading=false
             this.refresh=false
             })
